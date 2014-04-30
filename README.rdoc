@@ -1,0 +1,7 @@
+== Code along with by Peter Rhoades on May 07, 2013 (Updated on Apr 04, 2014)
+
+http://www.createdbypete.com/articles/working-with-nested-forms-and-a-many-to-many-association-in-rails-4/
+
+You'll notice I'm not worrying about validation in this guide because it's a simple enough example and this post is concentrating on the nested forms and many-to-many associations.
+
+You should be familiar with what you see here, I've used through: as this is recommended in the documentation as we have extra fields we want to access on the pivot table.

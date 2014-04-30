@@ -1,0 +1,55 @@
+<!-- What we have done there is create a table for the Survey model in the usual, then nested within that fields_for Questions and within that fields_for Answers. This allows Rails to make use of the accepts_nested_attributes_for method we used in the models.
+
+For the Answers fields_for we are using the find_or_initialize_by method so that our answer text_area will populate with data if it's available and if there isn't a record for that Participant and Question combination it initializes a model so the form builder has an object to map on to.
+
+You'll also notice a hidden_field where we set the participant_id for the record to ensure the answer gets associated to a participant (fields_for will automatically create a hidden_field for question_id as we use that model to build the answers object, view source on the page and you will see).
+
+ -->
+
+<h1><%= @survey.name %> Answers</h1>
+
+<%= form_for(@survey) do |f| %>
+  <% @participants.each do |participant| %>
+  <h3><%= participant.name %></h3>
+  <table>
+    <thead>
+      <tr>
+        <td>Questions</td>
+        <td>Answer</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.content %></td>
+        <td>
+        <%= f.fields_for :questions, question do |q| %>
+          <%= q.fields_for :answers, question.answers.find_or_initialize_by(participant: participant) do |a| %>
+            <%= a.text_area :content %>
+            <%= a.hidden_field :participant_id, participant.id %>
+          <% end %>
+        <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
